@@ -92,16 +92,19 @@ with open('A7data.txt') as f_in:
         assinum = len(All_po)
 
         # Stops when all lists finish in the same point
+        finpo = []
+
         for yeti in range(1, len(NaLay)):
             if NaLay[yeti-1][-1] == NaLay[yeti][-1]:
-                yetnep = True
+                finpo.append(True)
             else:
-                yetnep = False
+                finpo.append(False)
+
 
 
 
         # Ends the program when all towers have been assigned
-        if (assinum == linnum) and (yetnep == True):
+        if (assinum == linnum) and (all(finpo) == True):
             Still_Data = False
 
         if rowcom > 18:
@@ -127,3 +130,15 @@ for braWEI, braNAM in zip(WeiLay, NaLay):
     Inv_Nam.append(braNAM[::-1])
 
 print('Starting point: '+str(Inv_Nam[0][0]))
+
+
+"""
+PART 2
+"""
+
+# Turns the list into a list of list, much more usable
+TOWER = []
+
+for wolver in Inv_Wei:
+
+    print(wolver)
