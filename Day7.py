@@ -96,7 +96,9 @@ Tree_wei = []
 
 # Reads the list again but this time usisng layers
 # Thankfully the points are in the same order
-
+# Inverts both lists first
+Inv_Layers = Layers[::-1]
+Inv_NaLay = NaLay[::-1]
 
 
 """
