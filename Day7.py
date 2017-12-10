@@ -12,6 +12,8 @@ immediately above it.
 
 
 import matplotlib.pyplot as plt
+import itertools as itt
+
 
 
 # Reads the file, skipping the empty lines
@@ -21,88 +23,99 @@ with open('A7data.txt') as f_in:
     # Turns it into a List
     tralines = list(lines)
 
+    # Lists of content
+    WeiLay = [] # Contains weights
+    NaLay = [] # Contains names
 
-    Layers = [] # List of layers (Last, Middle, ..., First)
-    NaLay  = [] # Same list of layers, but this time, with only the name
     linnum = len(tralines)
     assinum = 0 # Assigned points so far
-    couLay = 0 # COunts the layers
+    rowcom = 0
 
-    # Variable that controls the loop
-    Still_data = True
-    while Still_data == True:
-        Layers.append([]) # Adds one extra layer
-        NaLay.append([])
 
-        for this_line in tralines:
-            seplin = this_line.split('->')
+    Still_Data = True
+    while Still_Data == True:
+
+        print('Row: '+str(rowcom))
+
+        for each_line in tralines:
+            seplin = each_line.split('->')
             # Only obtains the name, not the weight
             namlin = seplin[0].split(' (')[0]
+            skip_thing = False
 
-            if len(Layers) == 1:
-                # Only for the first run, selects the end of the tower
-                if len(seplin) == 1:
-                    Layers[-1].append(seplin[0])
-                    NaLay[-1].append(namlin)
-                    assinum += 1 # Adds one to the points assigned count
+            # In the case of the end of the tower
+            if len(seplin) == 1:
 
-            else:
-
-                # Skips points already covered
-                for elelayer in NaLay[:-1]:
-                    if namlin in elelayer:
-                        Cov_point = True
-                        break
+                # Skips if the point has already been assigned
+                if rowcom == 0:
+                    # Only valid for first row
+                    if namlin in NaLay:
+                        continue
                 else:
-                    Cov_point = False
+                    for this_BBB in NaLay:
+                        if namlin in this_BBB:
+                            skip_thing = True
 
-                if Cov_point == True:
+                    if skip_thing == True:
+                        continue
+
+                    WeiLay.append([seplin[0]])
+                    NaLay.append([namlin])
                     continue
 
-                # In all other cases, it adds the subsequent point to the list
-                # Assuming that they lead to a point already in the list
 
+            # Skips points already assigned
+            for loltz in range(0, len(NaLay)):
+                leBranch = NaLay[loltz]
+                if namlin in leBranch:
+                    continue
+
+
+                # For the rest, appends to the corresponding branch
                 # Separates the second part
                 separ2 = seplin[1]
-                # Separate after eliminating spaces
-                act_separ2 = separ2.replace(' ', '').split(',')
-                        # Checks if in the one before
-                for befyer in act_separ2:
-                    if (befyer in NaLay[-2]) and (namlin not in NaLay[-1]):
-                        Layers[-1].append(seplin[0])
-                        NaLay[-1].append(namlin)
-                        assinum += 1
+
+                for each_elem in leBranch:
+
+                    if each_elem in separ2:
+                        WeiLay[loltz].append(seplin[0])
+                        NaLay[loltz].append(namlin)
 
 
-        # Ends the loop when all points are covered
-        if assinum == linnum:
-            Still_data = False
+        # Computes the length of all the lists combined
+        All_po = []
 
-        print('Rows covered: '+str(couLay))
-        couLay += 1
+        for leitem in itt.chain.from_iterable(NaLay):
+            if leitem not in All_po:
+                All_po.append(leitem)
 
-# Plots the resultant nodes
-for qq in range(0, len(NaLay)):
-    print('Row: '+str(qq)+'; starting from the end')
-    for hh, zz in zip(NaLay[qq], Layers[qq]):
-        print(zz, hh)
+        assinum = len(All_po)
 
-print(NaLay)
-print(Layers)
-
-# Creates a tree of lists
-Tree_names = []
-Tree_wei = []
-
-# Reads the list again but this time usisng layers
-# Thankfully the points are in the same order
-# Inverts both lists first
-Inv_Layers = Layers[::-1]
-Inv_NaLay = NaLay[::-1]
+        # Stops when all lists finish in the same point
+        for yeti in range(1, len(NaLay)):
+            if NaLay[yeti-1][-1] == NaLay[yeti][-1]:
+                yetnep = True
+            else:
+                yetnep = False
 
 
-"""
-VISUALIZATION
-"""
 
-# Plots the results to have a better visual
+        # Ends the program when all towers have been assigned
+        if (assinum == linnum) and (yetnep == True):
+            Still_Data = False
+
+        if rowcom > 18:
+            Still_Data = False
+
+
+
+        rowcom += 1
+
+
+
+for zz, hh in zip(WeiLay, NaLay):
+    print(zz)
+    print(hh)
+
+print(assinum)
+print(linnum)
