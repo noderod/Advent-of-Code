@@ -112,10 +112,18 @@ with open('A7data.txt') as f_in:
         rowcom += 1
 
 
+"""
+LIST CHANGES
+"""
 
-for zz, hh in zip(WeiLay, NaLay):
-    print(zz)
-    print(hh)
+# Changes the way the system is designed to have a new path
 
-print(assinum)
-print(linnum)
+# Inverted list of things
+Inv_Nam = []
+Inv_Wei = []
+
+for braWEI, braNAM in zip(WeiLay, NaLay):
+    Inv_Wei.append(braWEI[::-1])
+    Inv_Nam.append(braNAM[::-1])
+
+print('Starting point: '+str(Inv_Nam[0][0]))
