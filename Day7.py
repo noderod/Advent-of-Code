@@ -133,13 +133,19 @@ for braWEI, braNAM in zip(WeiLay, NaLay):
     Inv_Wei.append(braWEI[::-1])
     Inv_Nam.append(braNAM[::-1])
 
+
+# To remember how it works
+print(Inv_Nam[0])
+print(Inv_Nam[34])
+
 print('Starting point: '+str(Inv_Nam[0][0]))
 print('PART 1 SOLVED\n')
 
 """
 PART 2
 """
-"""
+
+
 # Turns the list into a list of list, much more usable
 TOWER = []
 
@@ -171,6 +177,11 @@ for vtvt in range(0, mxl):
             Columns[vtvt].append('X (0)')
 
 
+# Check
+print(Columns[0], Columns[1])
+
+
+
 # Returns the lists that contains a certain list
 # leur (arr)
 # Ex. [1, [34, 12], [43, 6]] -> f(x) -> [[34, 12], [43, 6]]
@@ -184,97 +195,7 @@ def innist(leur):
 
     return JJJ
 
-"""
-################ EXPERIMENTAL
-# Computes the layers
-# Reads the file, skipping the empty lines
-with open('A7data.txt') as f_in:
-    lines = (line.rstrip() for line in f_in) # All lines including the blank ones
-    lines = (line for line in lines if line) # Non-blank lines
-    # Turns it into a List
-    tralines = list(lines)
 
-
-    Layers = [] # List of layers (Last, Middle, ..., First)
-    NaLay  = [] # Same list of layers, but this time, with only the name
-    linnum = len(tralines)
-    assinum = 0 # Assigned points so far
-    couLay = 0 # COunts the layers
-
-    # Variable that controls the loop
-    Still_data = True
-    while Still_data == True:
-        Layers.append([]) # Adds one extra layer
-        NaLay.append([])
-
-        for this_line in tralines:
-            seplin = this_line.split('->')
-            # Only obtains the name, not the weight
-            namlin = seplin[0].split(' (')[0]
-
-            if len(Layers) == 1:
-                # Only for the first run, selects the end of the tower
-                if len(seplin) == 1:
-                    Layers[-1].append(seplin[0])
-                    NaLay[-1].append(namlin)
-                    assinum += 1 # Adds one to the points assigned count
-
-            else:
-
-                # Skips points already covered
-                for elelayer in NaLay[:-1]:
-                    if namlin in elelayer:
-                        Cov_point = True
-                        break
-                else:
-                    Cov_point = False
-
-                if Cov_point == True:
-                    continue
-
-                # In all other cases, it adds the subsequent point to the list
-                # Assuming that they lead to a point already in the list
-
-                # Separates the second part
-                separ2 = seplin[1]
-                # Separate after eliminating spaces
-                act_separ2 = separ2.replace(' ', '').split(',')
-                        # Checks if in the one before
-                for befyer in act_separ2:
-                    if (befyer in NaLay[-2]) and (namlin not in NaLay[-1]):
-                        Layers[-1].append(seplin[0])
-                        NaLay[-1].append(namlin)
-                        assinum += 1
-
-
-        # Ends the loop when all points are covered
-        if assinum == linnum:
-            Still_data = False
-
-        print('Rows covered: '+str(couLay))
-        couLay += 1
-
-# Inverts the layers
-Inv_Nam = NaLay[::-1]
-Inv_Wei = Layers[::-1]
-print(Inv_Nam[0], Inv_Wei[0])
-
-
-# Starts by the second to last and finds the weight of each branch
-
-
-
-"""for qq in range(0, len(NaLay)):
-    print('Row: '+str(qq)+'; starting from the end')
-    for hh, zz in zip(NaLay[qq], Layers[qq]):
-         print(zz, hh)
-
-print(NaLay[-1])"""
-
-
-
-#################################################################################
-"""
 TREEW = []
 ALCH = []
 
@@ -297,4 +218,3 @@ for momo in range(0, mxl):
 
 
 print(TREEW)
-"""
