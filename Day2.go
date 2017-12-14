@@ -1,7 +1,7 @@
-/**
+/*******************************************************************************
 Carlos Redondo
-Started December 11th, 2017
-**/
+December 11th, 2017
+*******************************************************************************/
 
 
 package main
@@ -80,7 +80,6 @@ func main() {
 
         //  SECOND PART
 
-
         // Value to track the for loops
         tracker := 0
 
@@ -119,11 +118,8 @@ func main() {
               tracker = 1
 
             }
-
           }
-
         }
-
     }
 
     // Prints final result
